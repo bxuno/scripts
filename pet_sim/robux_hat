@@ -1,0 +1,9 @@
+local getOnlyOne = true
+--//
+local h=false repeat task.wait() local td,wt={},0
+local tb=10-#workspace.__REMOTES.Core["Get Stats"]:InvokeServer().Save.Hats
+for _=1,tb do task.spawn(function()
+local _,h=workspace.__REMOTES.Game.Shop:InvokeServer("Buy","Presents","Golden")
+if tonumber(h[1][1].n)~=40007 then table.insert(td,h[1][1].id)
+else print"got robux hat"h=true end wt=wt+1 end) end repeat wait()until wt==tb 
+workspace.__REMOTES.Game.Hats:InvokeServer("MultiDelete",td) until getOnlyOne and h
